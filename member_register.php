@@ -1,5 +1,6 @@
 <?php
 	include 'koneksi.php';
+	include 'password.php';
 		$nama = $_POST['nama'];
 		$alamat = $_POST['alamat'];
 		$email = $_POST['email'];
@@ -18,7 +19,8 @@
 				$query = mysqli_query($koneksi, "SELECT * FROM users WHERE nama='$nama'");
 				$hasil = mysqli_num_rows($query);
 				if($hasil == NULL){
-					mysqli_query($koneksi, "INSERT INTO users VALUES('', '$nama', '$alamat', '$email', '$nohp', '$username', '$password', '$role')");
+					$new_pass = create_password($password);
+					mysqli_query($koneksi, "INSERT INTO users VALUES('', '$nama', '$alamat', '$email', '$nohp', '$username', '$new_pass', '$role')");
 				echo "<script>alert('Daftar Berhasil $nama, Silahkan login'); window.location = 'login.php'</script>";
 				}
 				else
