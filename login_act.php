@@ -31,5 +31,8 @@
 			}
 		}
 	}
+	else{
+		echo "<script>alert('Password Salah.'); window.location = 'login.php'</script>";
+	}
 	
 	?>

@@ -5,6 +5,7 @@
 	session_start();
 	include 'cek.php';
 	include 'config.php';
+	require 'access.php';
 	?>
 	<title>Diva Ulos | Admin</title>
 	<link rel="shortcut icon" href="../img/icon/icon.png">
