@@ -21,45 +21,48 @@
 				$hasil = mysqli_num_rows($query);
 				if($hasil == NULL){
 					$new_pass = create_password($password);
-					mysqli_query($koneksi, "INSERT INTO users VALUES('', '$nama', '$alamat', '$email', '$nohp', '$username', '$new_pass', '$role')");
-					$html='Msg';
-					echo smtp_mailer('samuelambarita20@gmail.com','test',$html);
-					function smtp_mailer($to,$subject, $msg){
-						$mail = new PHPMailer(); 
-						$mail->SMTPDebug  = 3;
-						$mail->IsSMTP(); 
-						$mail->SMTPAuth = true; 
-						$mail->SMTPSecure = 'tls'; 
-						$mail->Host = "smtp.gmail.com";
-						$mail->Port = 587; 
-						$mail->IsHTML(true);
-						$mail->CharSet = 'UTF-8';
-						$mail->Username = "samuelambarita2000@gmail.com";
-						$mail->Password = "20092000a";
-						$mail->SetFrom("samuelambarita2000@gmail.com");
-						$mail->Subject = $subject;
-						$mail->Body =$msg;
-						$mail->AddAddress("samuelambarita20@gmail.com");
-						$mail->SMTPOptions=array('ssl'=>array(
-							'verify_peer'=>false,
-							'verify_peer_name'=>false,
-							'allow_self_signed'=>false
-						));
-						if(!$mail->Send()){
-							echo $mail->ErrorInfo;
-						}else{
-							return 'Sent';
-						}
-					}
-				echo "<script>alert('Daftar Berhasil $nama, Silahkan login'); window.location = 'login.php'</script>";
+					mysqli_query($koneksi, "INSERT INTO users VALUES('', '$nama', '$alamat', '$email', '$nohp', '$username', '$new_pass', '$role', 0)");
+					$html=file_get_contents('email.html');
+					$bla = '"http://localhost:8081/kepal/Project-Kepal/konfirmasi_akun.php?nama='. $nama .'"';
+					$html=str_replace('%bla%', $bla, $html);
+					echo smtp_mailer($email,'test',$html);
+					
+					echo "<script>alert('Daftar Berhasil $nama, Silahkan konfirmasi'); window.location = 'login.php'</script>";
 				}
 				else
 				{
-				echo "<script>alert('Nama pengguna sudah terdaftar!'); window.location = 'register.php'</script>";
+					echo "<script>alert('Nama pengguna sudah terdaftar!'); window.location = 'register.php'</script>";
 				}
 			}
 			else{
 				echo "<script>alert('Password tidak sama!'); window.location = 'register.php'</script>";			
 			}
 		}
+function smtp_mailer($to,$subject, $msg){
+	$mail = new PHPMailer(); 
+	$mail->SMTPDebug  = 3;
+	$mail->IsSMTP(); 
+	$mail->SMTPAuth = true; 
+	$mail->SMTPSecure = 'tls'; 
+	$mail->Host = "smtp.gmail.com";
+	$mail->Port = 587; 
+	$mail->IsHTML(true);
+	$mail->CharSet = 'UTF-8';
+	$mail->Username = "samuelambarita2000@gmail.com";
+	$mail->Password = "20092000a";
+	$mail->SetFrom("samuelambarita2000@gmail.com");
+	$mail->Subject = $subject;
+	$mail->Body =$msg;
+	$mail->AddAddress($to);
+	$mail->SMTPOptions=array('ssl'=>array(
+		'verify_peer'=>false,
+		'verify_peer_name'=>false,
+		'allow_self_signed'=>false
+	));
+	if(!$mail->Send()){
+		echo $mail->ErrorInfo;
+	}else{
+		return 'Sent';
+	}
+}
 ?>
