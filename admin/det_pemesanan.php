@@ -1,5 +1,6 @@
 <?php 
 include 'header.php';
+require '../RSA.php';
 ?>
 
 <h3><span class="glyphicon glyphicon-briefcase"></span>  Detail Pemesanan</h3>
@@ -19,7 +20,7 @@ while($d=mysqli_fetch_array($det)){
 		</tr>
 		<tr>
 			<td>ID Users</td>
-			<td><?php echo $d['id_users'] ?></td>
+			<td><?php echo decrypt($d['id_users']) ?></td>
 		</tr>
 		<tr>
 			<td>Nama</td>
@@ -27,11 +28,11 @@ while($d=mysqli_fetch_array($det)){
 		</tr>
 		<tr>
 			<td>Alamat</td>
-			<td><?php echo $d['alamat'] ?></td>
+			<td><?php echo decrypt($d['alamat']) ?></td>
 		</tr>
 		<tr>
 			<td>Email</td>
-			<td><?php echo $d['email'] ?></td>
+			<td><?php echo decrypt($d['email']) ?></td>
 		</tr>
 		<tr>
 			<td>NO HP</td>

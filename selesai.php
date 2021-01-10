@@ -1,6 +1,7 @@
 <?php 
 require_once("cart.php"); 
 require_once("header.php");
+require "RSA.php";
 if (!isset($_SESSION['masuk'])) {
 	echo "<script>alert('Anda harus login untuk memesan produk ini!'); window.location = 'login.php'</script>";
 }
@@ -20,12 +21,12 @@ if (!isset($_SESSION['masuk'])) {
             <div class="hero-unit">
     <?php
 			if($_POST['finish']){
-				$id_users = $_POST['id_users'];
+				$id_users = encrypt($_POST['id_users']);
 				$id_produk = $_POST['id_produk'];
 				$nama = $_POST['nama'];
-				$alamat = $_POST['alamat'];
-				$email = $_POST['email'];
-				$nohp = $_POST['nohp'];
+				$alamat = encrypt($_POST['alamat']);
+				$email = encrypt($_POST['email']);
+				$nohp = encrypt($_POST['nohp']);
 				$jumlah = $_POST['jumlah'];
 				$total = $_POST['total'];
 				
