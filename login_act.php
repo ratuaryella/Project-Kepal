@@ -32,9 +32,12 @@
 			if ($row['role']==1) {
 				echo "<script>alert('Selamat datang $username'); window.location = 'admin/index.php'</script>";	
 			}
+			if($row['validasi']==0){
+				echo "<script>alert('Validasi email terlebih dahulu'); window.location = 'login.php.php'</script>";
+			}
 			if ($row['role']==2) {
 				echo "<script>alert('Selamat datang $username'); window.location = 'index.php'</script>";
-		}else{
+			}else{
 			echo "<script>alert('Username dan Password tidak valid.'); window.location = 'login.php'</script>";
 			}
 		}
